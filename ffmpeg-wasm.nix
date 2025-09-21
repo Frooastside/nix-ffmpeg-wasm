@@ -64,7 +64,7 @@ stdenv.mkDerivation (finalAttrs: {
           --enable-gpl \
           --enable-libx264 \
           --extra-cflags="-pthread -target wasm32-wasi-threads -ftls-model=local-exec -D_WASI_EMULATED_PROCESS_CLOCKS -D_WASI_EMULATED_SIGNAL -msimd128" \
-          --extra-ldflags="-pthread -target wasm32-wasi-threads -Wl,--max-memory=131072000 -Wl,--import-memory -Wl,--export-memory -lwasi-emulated-process-clocks -lwasi-emulated-signal -msimd128" # \
+          --extra-ldflags="-pthread -target wasm32-wasi-threads -Wl,--max-memory=536870912 -Wl,--import-memory -Wl,--export-memory -lwasi-emulated-process-clocks -lwasi-emulated-signal -msimd128" # \
           #--enable-zlib \
  '';
 

@@ -37,7 +37,7 @@ stdenv.mkDerivation (finalAttrs: {
         --enable-static \
         --disable-cli \
         --disable-asm \
-        --extra-cflags="-pthread -target wasm32-wasi-threads -D_WASI_EMULATED_SIGNAL -msimd128" \
+        --extra-cflags="-pthread -target wasm32-wasip1-threads -D_WASI_EMULATED_SIGNAL -msimd128" \
         --extra-ldflags="-lc -lwasi-emulated-signal"
 
     substituteInPlace config.h --replace "#define HAVE_MALLOC_H 1" "#define HAVE_MALLOC_H 0"

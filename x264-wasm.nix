@@ -8,7 +8,7 @@
 
 stdenv.mkDerivation (finalAttrs: {
   pname = "x264-wasm";
-  version = "unstable";
+  version = "stable";
 
   src = fetchFromGitLab {
     domain = "code.videolan.org";

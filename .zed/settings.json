@@ -1,0 +1,23 @@
+{
+  "lsp": {
+    "nil": {
+      "settings": {
+        "formatting": {
+          "command": ["/run/current-system/sw/bin/nixfmt"]
+        }
+      }
+    },
+    "nixd": {
+      "settings": {
+        "formatting": {
+          "command": ["/run/current-system/sw/bin/nixfmt"]
+        }
+      }
+    }
+  },
+  "languages": {
+    "Nix": {
+      "tab_size": 2
+    }
+  }
+}

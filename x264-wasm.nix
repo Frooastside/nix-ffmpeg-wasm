@@ -1,7 +1,7 @@
 {
   lib,
   stdenv,
-  fetchFromGitHub,
+  fetchFromGitLab,
   pkg-config,
   wasi-sdk
 }:
@@ -10,11 +10,12 @@ stdenv.mkDerivation (finalAttrs: {
   pname = "x264-wasm";
   version = "unstable";
 
-  src = fetchFromGitHub {
-    owner = "FFmpeg-WASI";
+  src = fetchFromGitLab {
+    domain = "code.videolan.org";
+    owner = "videolan";
     repo = "x264";
-    rev = "a8b68eb";
-    hash = "sha256-y5+JB1N/nHujimNaiYA7nrMf3guXsUi/Y04j3GwgUNY=";
+    rev = "b35605ace3ddf7c1a5d67a2eb553f034aef41d55";
+    hash = "sha256-hGfMPLiEP9X6O5GvlDDY8tALQuG7wuveN1SN5M5IKMs=";
   };
 
   nativeBuildInputs = [

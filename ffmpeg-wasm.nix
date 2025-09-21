@@ -5,7 +5,8 @@
   pkg-config,
   wasi-sdk,
   binaryen,
-  x264-wasm
+  x264-wasm,
+  aom-wasm
 }:
 
 stdenv.mkDerivation (finalAttrs: {
@@ -27,6 +28,7 @@ stdenv.mkDerivation (finalAttrs: {
 
   buildInputs = [
     x264-wasm
+    aom-wasm
   ];
 
   patchPhase = ''
@@ -63,6 +65,7 @@ stdenv.mkDerivation (finalAttrs: {
           --disable-protocol="fd" \
           --enable-gpl \
           --enable-libx264 \
+          --enable-libaom \
           --extra-cflags="-pthread -target wasm32-wasip1-threads -ftls-model=local-exec -D_WASI_EMULATED_PROCESS_CLOCKS -D_WASI_EMULATED_SIGNAL -msimd128" \
           --extra-ldflags="-pthread -target wasm32-wasip1-threads -Wl,--max-memory=536870912 -Wl,--import-memory -Wl,--export-memory -lwasi-emulated-process-clocks -lwasi-emulated-signal -msimd128" # \
           #--enable-zlib \

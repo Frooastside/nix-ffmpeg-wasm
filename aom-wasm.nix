@@ -1,31 +1,33 @@
 {
   lib,
-  stdenvNoCC,
-  fetchFromGitLab,
-  pkg-config,
+  stdenv,
+  fetchgit,
+  cmake,
+  perl,
   wasi-sdk
 }:
 
-stdenvNoCC.mkDerivation (finalAttrs: {
-  pname = "x264-wasm";
-  version = "stable";
+stdenv.mkDerivation (finalAttrs: {
+  pname = "aom-wasm";
+  version = "unstable";
 
-  src = fetchFromGitLab {
-    domain = "code.videolan.org";
-    owner = "videolan";
-    repo = "x264";
-    rev = "b35605ace3ddf7c1a5d67a2eb553f034aef41d55";
-    hash = "sha256-hGfMPLiEP9X6O5GvlDDY8tALQuG7wuveN1SN5M5IKMs=";
+  src = fetchgit {
+    url = "https://aomedia.googlesource.com/aom";
+    rev = "v3.13.1";
+    hash = "sha256-C6V2LxJo7VNA9Tb61zJKswnpczpoDj6O3a4J0Z5TZ0A=";
   };
 
   nativeBuildInputs = [
-    pkg-config
+    cmake
+    perl
     wasi-sdk
   ];
 
-  patchPhase = ''
+  /*patchPhase = ''
     patchShebangs ./configure
   '';
+
+  <
 
   configurePhase = ''
     CC="${wasi-sdk}/bin/clang" \
@@ -45,12 +47,23 @@ stdenvNoCC.mkDerivation (finalAttrs: {
 
   makeFlags = [
     "install-lib-static"
+  ];*/
+
+  cmakeFlags = [
+    "-DAOM_TARGET_CPU=generic"
+    "-DCONFIG_RUNTIME_CPU_DETECT=0"
+    #"-DAOM_EXTRA_C_FLAGS="
   ];
 
+  installPhase = ''
+    mkdir -p $out/bin;
+    touch $out/bin/test;
+  '';
+
   meta = {
-      description = "x264-wasm";
-      homepage = "https://code.videolan.org/videolan/x264";
-      license = lib.licenses.gpl2Plus;
+      description = "aom-wasm";
+      homepage = "https://aomedia.googlesource.com/aom";
+      license = lib.licenses.bsd2;
       platforms = lib.platforms.all;
       maintainers = [];
     };

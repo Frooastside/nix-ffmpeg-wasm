@@ -56,8 +56,11 @@ stdenv.mkDerivation (finalAttrs: {
   ];
 
   installPhase = ''
+
     mkdir -p $out/bin;
     touch $out/bin/test;
+
+    cp -rd ./* $out
   '';
 
   meta = {

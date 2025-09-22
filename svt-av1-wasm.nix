@@ -11,22 +11,22 @@ stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "aom-wasm";
   version = "unstable";
 
-  src = fetchgit {
-    url = "https://aomedia.googlesource.com/aom";
-    rev = "v3.13.1";
-    hash = "sha256-C6V2LxJo7VNA9Tb61zJKswnpczpoDj6O3a4J0Z5TZ0A=";
+  src = fetchFromGitLab {
+    owner = "AOMediaCodec";
+    repo = "SVT-AV1";
+    rev = "v3.1.2";
+    #hash = "sha256-hGfMPLiEP9X6O5GvlDDY8tALQuG7wuveN1SN5M5IKMs=";
   };
-  #src = ./aom;
 
   nativeBuildInputs = [
-    cmake
-    perl
     wasi-sdk
+    cmake
+    #perl
   ];
 
-  patchPhase = ''
-    substituteInPlace CMakeLists.txt --replace-fail 'include("''${AOM_ROOT}/test/test.cmake")' "#keine_tests";
-  '';
+  #patchPhase = ''
+  #  substituteInPlace CMakeLists.txt --replace-fail 'include("''${AOM_ROOT}/test/test.cmake")' "#keine_tests";
+  #'';
 /*
   configurePhase = ''
     CC="${wasi-sdk}/bin/clang" \
@@ -48,7 +48,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     "install-lib-static"
   ];*/
 
-  cmakeFlags = [
+  /*cmakeFlags = [
     "-DCMAKE_C_COMPILER=${wasi-sdk}/bin/wasm32-wasip1-threads-clang"
     "-DCMAKE_CXX_COMPILER=${wasi-sdk}/bin/wasm32-wasip1-threads-clang++"
     "-DCMAKE_AR=${wasi-sdk}/bin/ar"
@@ -67,21 +67,25 @@ stdenvNoCC.mkDerivation (finalAttrs: {
        #"-DAOM_EXTRA_C_FLAGS=-wasm-enable-sjlj"
        #"-DAOM_EXTRA_CXX_FLAGS=-wasm-enable-sjlj"
     #"-DAOM_EXTRA_C_FLAGS="
-  ];
+    ];*/
 
   installPhase = ''
 
     mkdir -p $out/bin;
     touch $out/bin/test;
 
-#    cp -rd ./* $out
+    cp -rd ./* $out
 
-    mkdir -p $out/lib
-    cp libaom.a $out/lib;
-    cp libaom_av1_rc.a $out/lib;
-    cp libaom_pc.a $out/lib;
-    cp libaom_version.a $out/lib;
+
   '';
+
+
+  /*mkdir -p $out/lib
+  cp libaom.a $out/lib;
+  cp libaom_av1_rc.a $out/lib;
+  cp libaom_pc.a $out/lib;
+  cp libaom_version.a $out/lib;*/
+
 
   meta = {
       description = "aom-wasm";

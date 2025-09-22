@@ -11,11 +11,12 @@ stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "aom-wasm";
   version = "unstable";
 
-  src = fetchgit {
+  /*src = fetchgit {
     url = "https://aomedia.googlesource.com/aom";
     rev = "v3.13.1";
     hash = "sha256-C6V2LxJo7VNA9Tb61zJKswnpczpoDj6O3a4J0Z5TZ0A=";
-  };
+  };*/
+  src = ./aom;
 
   nativeBuildInputs = [
     cmake
@@ -50,6 +51,8 @@ stdenvNoCC.mkDerivation (finalAttrs: {
   ];*/
 
   cmakeFlags = [
+    "-DCMAKE_C_COMPILER=${wasi-sdk}/bin/wasm32-wasip1-threads-clang"
+    "-DCMAKE_CXX_COMPILER=${wasi-sdk}/bin/wasm32-wasip1-threads-clang++"
     "-DAOM_TARGET_CPU=generic"
     "-DCONFIG_RUNTIME_CPU_DETECT=0"
     #"-DAOM_EXTRA_C_FLAGS="

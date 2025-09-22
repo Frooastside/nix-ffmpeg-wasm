@@ -28,7 +28,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
   '';
 
   configurePhase = ''
-    CC="${wasi-sdk}/bin/clang" \
+    CC="${wasi-sdk}/bin/wasm32-wasip1-threads-clang" \
         AR="${wasi-sdk}/bin/ar" \
         RANLIB="${wasi-sdk}/bin/ranlib" \
         ./configure \

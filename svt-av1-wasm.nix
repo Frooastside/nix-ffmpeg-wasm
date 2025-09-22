@@ -1,7 +1,7 @@
 {
   lib,
   stdenvNoCC,
-  fetchgit,
+  fetchFromGitLab,
   cmake,
   perl,
   wasi-sdk
@@ -9,13 +9,13 @@
 
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "aom-wasm";
-  version = "unstable";
+  version = "3.1.2";
 
   src = fetchFromGitLab {
     owner = "AOMediaCodec";
     repo = "SVT-AV1";
-    rev = "v3.1.2";
-    #hash = "sha256-hGfMPLiEP9X6O5GvlDDY8tALQuG7wuveN1SN5M5IKMs=";
+    rev = "v${finalAttrs.version}";
+    hash = "sha256-/CpcxdyC4qf9wdzzySMYw17FbjYpasT+QVykXSlx28U=";
   };
 
   nativeBuildInputs = [
@@ -48,11 +48,13 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     "install-lib-static"
   ];*/
 
-  /*cmakeFlags = [
-    "-DCMAKE_C_COMPILER=${wasi-sdk}/bin/wasm32-wasip1-threads-clang"
-    "-DCMAKE_CXX_COMPILER=${wasi-sdk}/bin/wasm32-wasip1-threads-clang++"
+  cmakeFlags = [
+    "-DCMAKE_C_COMPILER=${wasi-sdk}/bin/wasm32-wasip2-clang"
+    "-DCMAKE_CXX_COMPILER=${wasi-sdk}/bin/wasm32-wasip2-clang++"
     "-DCMAKE_AR=${wasi-sdk}/bin/ar"
-    "-DAOM_TARGET_CPU=generic"
+    #"-DAOM_EXTRA_C_FLAGS=-pthreads"
+    #"-DAOM_EXTRA_CXX_FLAGS=-pthreads"
+    /*"-DAOM_TARGET_CPU=generic"
     "-DCONFIG_RUNTIME_CPU_DETECT=0"
     "-DENABLE_DOCS=0"
        "-DENABLE_TESTS=0"
@@ -62,12 +64,12 @@ stdenvNoCC.mkDerivation (finalAttrs: {
        "-DCONFIG_WEBM_IO=1"
        "-DCONFIG_ANALYZER=0"
        "-DCONFIG_INSPECTION=0"
-       "-DAOM_EXTRA_C_FLAGS=-fwasm-exceptions"
-       "-DAOM_EXTRA_CXX_FLAGS=-fwasm-exceptions"
        #"-DAOM_EXTRA_C_FLAGS=-wasm-enable-sjlj"
        #"-DAOM_EXTRA_CXX_FLAGS=-wasm-enable-sjlj"
-    #"-DAOM_EXTRA_C_FLAGS="
-    ];*/
+    #"-DAOM_EXTRA_C_FLAGS="*/
+    # pthread_setschedparam
+    # pthread_setschedparam
+    ];
 
   installPhase = ''
 
